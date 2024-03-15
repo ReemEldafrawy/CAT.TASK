@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void solve(vector<vector<char>>& board) {
+        int m = board.size(), n = board[0].size();
+        int DIR[][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
+
+        stack<pair<int, int>> S;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O') {
+                    // Bounday 'O'
+                    if (i == 0 || i == m-1 || j == 0 || j == n-1) S.emplace(i, j);
+                    else board[i][j] = '#'; 
+                }
+            }
+        }
+
+        while (!S.empty()) {
+            auto [r, c] = S.top(); S.pop();
+            for (int i = 0; i < 4; i++) {
+                int nr = r + DIR[i][0], nc = c + DIR[i][1];
+                if (nr < 0 || nr >= m || nc < 0 || nc >= n || board[nr][nc] != '#') continue;
+                board[nr][nc] = 'O';
+                S.emplace(nr, nc);
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == '#') board[i][j] = 'X';
+            }
+        }
+    }
+};
