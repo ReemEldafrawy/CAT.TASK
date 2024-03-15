@@ -1,0 +1,46 @@
+class Solution {
+public:
+void search(int n,vector<int>&v,vector<int>a[])
+{
+    v[n]=1;
+    for(auto i:a[n])
+    {
+        if(v[i]==0)
+        {
+            search(i,v,a);
+        }
+    }
+}
+
+
+
+
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int s=isConnected.size();
+        vector<int>a[s];
+        for(int i=0;i<s;i++)
+        {
+            for(int j=0;j<s;j++)
+            {
+                if(isConnected[i][j]==1 &&i!=j)
+                {
+                    a[i].push_back(j);
+                    a[j].push_back(i);
+
+                }
+            }
+        }
+        vector<int>v(s,0);
+        int count=0;
+        for(int i=0;i<s;i++)
+        {
+            if(v[i]==0)
+            {
+                count++;
+                search(i,v,a);
+            }
+        }
+return count;
+    }
+};
